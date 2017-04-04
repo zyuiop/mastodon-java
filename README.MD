@@ -3,11 +3,11 @@ Using the API :
 
 The first step is to get an instance of `MastodonApp` (your app). Then, the second step is to authenticate the user. Finally, you get a `MastodonSession` with which you can call all the methods you want.
 
-## 1. Get a `MastodonApp`
+## 1. Get a `MastodonApp`
 
 Two options : if you already registered your app, then just use the constructor. If you did not register your app on the instance, use `MastodonApp.registerApp("mastodon.xyz", "MyGreatApp", "https://localhost:8080/", Scope.WRITE)` for example.
 
-## 2. Login
+## 2. Login
 
 To login, just call the `login` method of `MastodonApp`. It requires a redirectUri (that can be null) among all the redirectUris provided at app creation, and scopes.
 
