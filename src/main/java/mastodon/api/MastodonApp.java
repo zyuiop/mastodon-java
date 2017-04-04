@@ -4,11 +4,15 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import mastodon.api.internal.FormDataContent;
 import mastodon.api.internal.RequestsHelper;
+import mastodon.api.objects.MastodonInstance;
 import mastodon.api.responses.PostAppResponse;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static mastodon.api.internal.RequestsHelper.factory;
+import static mastodon.api.internal.RequestsHelper.getUrl;
 
 /**
  * @author zyuiop
@@ -58,5 +62,14 @@ public class MastodonApp {
 
     public LoginProcess login(String redirectUri, Scope... scopes) {
         return new LoginProcess(this, redirectUri, scopes);
+    }
+
+    /**
+     * Returns the current instance information
+     * @return instance information
+     */
+    public MastodonInstance getInstance() throws IOException {
+        HttpRequest request = factory().buildGetRequest(getUrl(getMastodonInstance(), "/api/v1/instance"));
+        return request.execute().parseAs(MastodonInstance.class);
     }
 }
