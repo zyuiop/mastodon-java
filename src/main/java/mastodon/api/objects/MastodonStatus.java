@@ -17,9 +17,9 @@ public class MastodonStatus extends GenericJson {
     @Key
     private MastodonAccount account;
     @Key("in_reply_to_id")
-    private int inReplyToId;
+    private Integer inReplyToId;
     @Key("in_reply_to_account_id")
-    private int inReplyToAccountId;
+    private Integer inReplyToAccountId;
     @Key
     private MastodonStatus reblog;
     @Key
@@ -65,11 +65,11 @@ public class MastodonStatus extends GenericJson {
         return account;
     }
 
-    public int getInReplyToId() {
+    public Integer getInReplyToId() {
         return inReplyToId;
     }
 
-    public int getInReplyToAccountId() {
+    public Integer getInReplyToAccountId() {
         return inReplyToAccountId;
     }
 
