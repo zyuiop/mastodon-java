@@ -12,6 +12,7 @@ import mastodon.api.objects.MastodonStatus;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 
 import static mastodon.api.internal.RequestsHelper.factory;
@@ -28,6 +29,10 @@ public class MastodonSession {
     MastodonSession(MastodonApp app, Credential credential) {
         this.app = app;
         this.credential = credential;
+    }
+
+    public Raw raw() {
+        return raw;
     }
 
     public MastodonAccount getAccount(int id) throws IOException {
@@ -88,19 +93,14 @@ public class MastodonSession {
         return raw.get("/api/v1/accounts/" + id + "/unmute", MastodonAccount.class);
     }
 
-    public Raw raw() {
-        return raw;
-    }
-
     // Todo : relationships
-    // Todo : all the rest :D
 
     public class Raw {
-        public <T extends GenericJson> T get(String endpoint, Class<T> tClass) throws IOException {
+        public <T> T get(String endpoint, Class<T> tClass) throws IOException {
             return getUnparsed(endpoint).parseAs(tClass);
         }
 
-        public <T extends GenericJson> T get(String endpoint, Type tClass) throws IOException {
+        public <T> T get(String endpoint, Type tClass) throws IOException {
             return (T) getUnparsed(endpoint).parseAs(tClass);
         }
 
@@ -110,11 +110,11 @@ public class MastodonSession {
             return request.execute();
         }
 
-        public <T extends GenericJson> T post(String endpoint, HttpContent content, Class<T> tClass) throws IOException {
+        public <T> T post(String endpoint, HttpContent content, Class<T> tClass) throws IOException {
             return postUnparsed(endpoint, content).parseAs(tClass);
         }
 
-        public <T extends GenericJson> T post(String endpoint, HttpContent content, Type tClass) throws IOException {
+        public <T> T post(String endpoint, HttpContent content, Type tClass) throws IOException {
             return (T) postUnparsed(endpoint, content).parseAs(tClass);
         }
 

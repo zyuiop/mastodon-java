@@ -31,11 +31,11 @@ public class MastodonStatus extends GenericJson {
     @Key("favourites_count")
     private int favouritesCount;
     @Key
-    private boolean reblogged;
+    private Boolean reblogged;
     @Key
-    private boolean favourited;
+    private Boolean favourited;
     @Key
-    private boolean sensitive;
+    private Boolean sensitive;
     @Key("spoiler_text")
     private String spoilerText;
     @Key
