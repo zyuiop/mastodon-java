@@ -1,9 +1,12 @@
 package mastodon.api;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.http.*;
 import com.google.gson.reflect.TypeToken;
 import mastodon.api.internal.FormDataContent;
+import mastodon.api.internal.RequestsHelper;
 import mastodon.api.objects.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -33,6 +36,12 @@ public class MastodonSession {
     MastodonSession(MastodonApp app, Credential credential) {
         this.app = app;
         this.credential = credential;
+    }
+
+    public static MastodonSession getSession(MastodonApp app, TokenResponse tokenResponse, Scope... scopes) {
+        AuthorizationCodeFlow flow = RequestsHelper.createFlow(app, scopes);
+        Credential credential = new Credential(flow.getMethod()).setFromTokenResponse(tokenResponse);
+        return new MastodonSession(app, credential);
     }
 
     public Raw raw() {

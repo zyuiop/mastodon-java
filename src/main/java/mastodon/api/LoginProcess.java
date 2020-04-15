@@ -26,14 +26,10 @@ public class LoginProcess {
         return url.build();
     }
 
-    public MastodonSession authorize(String code) throws IOException {
+    public TokenResponse authorize(String code) throws IOException {
         AuthorizationCodeTokenRequest request = flow.newTokenRequest(code);
         if (redirectUri != null)
             request.setRedirectUri(redirectUri);
-
-        TokenResponse response = request.execute();
-        Credential credential = new Credential(flow.getMethod()).setFromTokenResponse(response);
-
-        return new MastodonSession(app, credential);
+        return request.execute();
     }
 }
